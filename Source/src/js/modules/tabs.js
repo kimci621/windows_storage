@@ -1,15 +1,15 @@
-"use strict";
-
 const tabs = ({
   parentSelector,
   tabSelector,
   contentSelector,
-  activeClass
+  activeClass,
+  displayMode
 }) => {
   const parent = document.querySelector(parentSelector),
     tab = document.querySelectorAll(tabSelector),
     content = document.querySelectorAll(contentSelector),
-    activeTabClass = activeClass;
+    activeTabClass = activeClass,
+    display = displayMode;
 
   function HideTabContent() {
     tab.forEach(item => {
@@ -22,7 +22,7 @@ const tabs = ({
   }
 
   function showTabContent(i = 0) {
-    content[i].style.display = 'block';
+    content[i].style.display = display;
     tab[i].classList.add(activeTabClass);
   }
 
@@ -30,13 +30,13 @@ const tabs = ({
   showTabContent();
 
   parent.addEventListener('click', (e) => {
-    if (e.target &&
-      (e.target.classList.contains(tabSelector.slice(1)) ||
+    if (e.target && (e.target.classList.contains(tabSelector.slice(1)) ||
         e.target.parentNode.classList.contains(tabSelector.slice(1)))) {
       tab.forEach((item, index) => {
         if (e.target == item || e.target.parentNode == item) {
           HideTabContent();
           showTabContent(index);
+          // console.log('tab click');
         }
       });
     }
