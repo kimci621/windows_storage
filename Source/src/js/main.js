@@ -3,12 +3,14 @@ import modal from './modules/modal';
 import tabs from './modules/tabs';
 import forms from './modules/forms';
 import modalDatainfo from './modules/changeModal';
+import timer from './modules/timer';
 
 window.addEventListener("DOMContentLoaded", () => {
   'use strict';
-
   let dataFromModals = {};
+  let deadline = '2022-01-01';
 
+  timer('.container1', deadline);
   modalDatainfo(dataFromModals);
   modal();
   forms(dataFromModals);
