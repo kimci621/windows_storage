@@ -4,15 +4,17 @@ import tabs from './modules/tabs';
 import forms from './modules/forms';
 import modalDatainfo from './modules/changeModal';
 import timer from './modules/timer';
+import imagePopup from './modules/imagePopup';
 
 window.addEventListener("DOMContentLoaded", () => {
   'use strict';
   let dataFromModals = {};
-  let deadline = '2022-01-01';
 
-  timer('2021-09-08', '.container1');
+  //timer(deadline, parent selectorof timer)
+  timer('2021-12-31', '.container1');
   modalDatainfo(dataFromModals);
   modal();
+  imagePopup();
   forms(dataFromModals);
   tabs({
     parentSelector: '.balcon_icons',

@@ -25,18 +25,13 @@ const timer = (importDeadline, Timerselector) => {
     }
   }
 
-  function checkZerro(time, interval) {
-    if (time == '00') {
-      clearInterval(interval);
-    }
-  }
-
   function addTimeOnPage(selector) {
     const parentSelector = document.querySelector(selector),
       days = parentSelector.querySelector('#days'),
       hours = parentSelector.querySelector('#hours'),
       minutes = parentSelector.querySelector('#minutes'),
       seconds = parentSelector.querySelector('#seconds');
+    let reduce = calcTime().reduceTime;
 
     const refreshTimer = setInterval(exportToDom, 1000);
 
@@ -45,11 +40,14 @@ const timer = (importDeadline, Timerselector) => {
       hours.textContent = addZero(calcTime().hours);
       minutes.textContent = addZero(calcTime().minutes);
       seconds.textContent = addZero(calcTime().seconds);
-
-      checkZerro(days, refreshTimer);
-      checkZerro(hours, refreshTimer);
-      checkZerro(minutes, refreshTimer);
-      checkZerro(seconds, refreshTimer);
+      
+      if (reduce <= 0) {
+        clearInterval(refreshTimer);
+        days.textContent = '00';
+        hours.textContent = '00';
+        minutes.textContent = '00';
+        seconds.textContent = '00';
+      }
     }
   }
 
