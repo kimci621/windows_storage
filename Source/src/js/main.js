@@ -10,7 +10,7 @@ window.addEventListener("DOMContentLoaded", () => {
   let dataFromModals = {};
   let deadline = '2022-01-01';
 
-  timer('.container1', deadline);
+  timer('2021-09-08', '.container1');
   modalDatainfo(dataFromModals);
   modal();
   forms(dataFromModals);

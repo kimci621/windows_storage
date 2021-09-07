@@ -15165,7 +15165,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   let dataFromModals = {};
   let deadline = '2022-01-01';
-  Object(_modules_timer__WEBPACK_IMPORTED_MODULE_5__["default"])('.container1', deadline);
+  Object(_modules_timer__WEBPACK_IMPORTED_MODULE_5__["default"])('2021-09-08', '.container1');
   Object(_modules_changeModal__WEBPACK_IMPORTED_MODULE_4__["default"])(dataFromModals);
   Object(_modules_modal__WEBPACK_IMPORTED_MODULE_1__["default"])();
   Object(_modules_forms__WEBPACK_IMPORTED_MODULE_3__["default"])(dataFromModals);
@@ -15491,57 +15491,59 @@ const tabs = ({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-const timer = (id, deadline) => {
-  const addZero = num => {
-    if (num <= 9) {
-      return '0' + num;
-    } else {
-      return num;
-    }
-  };
+const timer = (importDeadline, Timerselector) => {
+  const deadline = importDeadline;
 
-  const getTimeRemaining = endtime => {
-    const t = Date.parse(endtime) - Date.parse(new Date()),
-          seconds = Math.floor(t / 1000 % 60),
-          minutes = Math.floor(t / 1000 / 60 % 60),
-          hours = Math.floor(t / (1000 * 60 * 60) % 24),
-          days = Math.floor(t / (1000 * 60 * 60 * 24));
+  function calcTime(importDate = deadline) {
+    const reduceTime = Date.parse(importDate) - Date.parse(new Date());
+    const seconds = Math.floor(reduceTime / 1000 % 60),
+          minutes = Math.floor(reduceTime / 1000 / 60 % 60),
+          hours = Math.floor(reduceTime / 1000 / 60 / 60 % 24),
+          days = Math.floor(reduceTime / 1000 / 60 / 60 / 24);
     return {
-      'total': t,
-      'days': days,
-      'hours': hours,
+      'reduceTime': reduceTime,
+      'seconds': seconds,
       'minutes': minutes,
-      'seconds': seconds
+      'hours': hours,
+      'days': days
     };
-  };
+  }
 
-  const setClock = (selector, endtime) => {
-    const timer = document.querySelector(selector),
-          days = timer.querySelector("#days"),
-          hours = timer.querySelector("#hours"),
-          minutes = timer.querySelector("#minutes"),
-          seconds = timer.querySelector("#seconds"),
-          timeInterval = setInterval(updateClock, 1000);
-    updateClock();
-
-    function updateClock() {
-      const t = getTimeRemaining(endtime);
-      days.textContent = addZero(t.days);
-      hours.textContent = addZero(t.hours);
-      minutes.textContent = addZero(t.minutes);
-      seconds.textContent = addZero(t.seconds);
-
-      if (t.total <= 0) {
-        days.textContent = "00";
-        hours.textContent = "00";
-        minutes.textContent = "00";
-        seconds.textContent = "00";
-        clearInterval(timeInterval);
-      }
+  function addZero(time) {
+    if (time < 9) {
+      return '0' + time;
+    } else {
+      return time;
     }
-  };
+  }
 
-  setClock(id, deadline);
+  function checkZerro(time, interval) {
+    if (time == '00') {
+      clearInterval(interval);
+    }
+  }
+
+  function addTimeOnPage(selector) {
+    const parentSelector = document.querySelector(selector),
+          days = parentSelector.querySelector('#days'),
+          hours = parentSelector.querySelector('#hours'),
+          minutes = parentSelector.querySelector('#minutes'),
+          seconds = parentSelector.querySelector('#seconds');
+    const refreshTimer = setInterval(exportToDom, 1000);
+
+    function exportToDom() {
+      days.textContent = addZero(calcTime().days);
+      hours.textContent = addZero(calcTime().hours);
+      minutes.textContent = addZero(calcTime().minutes);
+      seconds.textContent = addZero(calcTime().seconds);
+      checkZerro(days, refreshTimer);
+      checkZerro(hours, refreshTimer);
+      checkZerro(minutes, refreshTimer);
+      checkZerro(seconds, refreshTimer);
+    }
+  }
+
+  addTimeOnPage(Timerselector);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (timer);
